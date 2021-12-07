@@ -14,7 +14,7 @@ import { PutObjectCommand } from "@aws-sdk/client-s3";
 import fs from "fs";
 
 const app = express();
-
+const port = process.env.PORT
 //setting environment variables
 dotenv.config();
 console.log(process.env.PORT);
@@ -239,4 +239,4 @@ app.get("/image/:key",async (request, response) => {
   response.send(readStream);
 });
 
-app.listen(9000);
+app.listen(port);

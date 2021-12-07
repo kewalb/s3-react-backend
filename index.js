@@ -44,7 +44,7 @@ app.use(cors());
 const URL = "localhost:9000";
 const client = await createConnection();
 
-app.get("/", auth, (request, response) => {
+app.get("/",(request, response) => {
   response.status(200).send({ msg: "Hello World!" });
 });
 

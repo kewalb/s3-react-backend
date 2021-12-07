@@ -14,3 +14,6 @@ export async function createConnection() {
     console.log("MongoDB connected");
     return client;
 }
+
+
+

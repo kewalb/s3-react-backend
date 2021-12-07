@@ -14,11 +14,12 @@ import { PutObjectCommand } from "@aws-sdk/client-s3";
 import fs from "fs";
 
 const app = express();
-const port = process.env.PORT
+
 //setting environment variables
 dotenv.config();
-console.log(process.env.PORT);
 
+// console.log(process.env.PORT);
+const port = process.env.PORT
 //middleware
 // app.use(express.bodyParser({limit: '50mb'}));
 // app.use(express.urlencoded({limit: '50mb'}));
@@ -55,7 +56,7 @@ app.post("/user/register", async (request, response) => {
     .db("s3-react")
     .collection("users")
     .findOne({ username: username });
-  console.log(user);
+//   console.log(user);
   if (user != null) {
     response.status(400).send({ message: "Try with different username" });
   } else {
@@ -83,7 +84,7 @@ app.post("/user/register", async (request, response) => {
         pass: process.env.PASSWORD,
       },
     });
-    console.log("Hello", process.env.USERNAME1, process.env.PASSWORD);
+    // console.log("Hello", process.env.USERNAME1, process.env.PASSWORD);
     // send mail with defined transport object
     let mailOptions = {
       from: "no-reply@example.com", // sender address
@@ -113,7 +114,7 @@ app.get("/verify", async (request, response) => {
     .db("s3-react")
     .collection("users")
     .findOne({ username: username });
-  console.log(user);
+//   console.log(user);
   if (user.tempToken === token) {
     await client
       .db("s3-react")
@@ -163,7 +164,7 @@ const s3 = new AWS.S3({
 });
 
 function uploadFile(file) {
-  console.log(region);
+//   console.log(region);
   const fileStream = fs.createReadStream(file.path);
   const uploadParams = {
     Bucket: bucketName,
@@ -204,7 +205,7 @@ app.get('/getkeys', async (request, response) => {
 
 app.get("/drive", async (request, response) => {
   const result = await listObjects();
-  console.log(result)
+//   console.log(result)
   response.send(result.Contents);
 });
 
@@ -215,7 +216,7 @@ app.post("/upload",auth,  upload.single("file"), async (request, response) => {
   const user = request.header("user")
 //   console.log(file);
   const result = await uploadFile(file);
-  console.log(result);
+//   console.log(result);
 await client
     .db("s3-react")
     .collection("users")
@@ -235,7 +236,7 @@ function getFileStream(fileKey) {
 app.get("/image/:key",async (request, response) => {
   const key = request.params.key;
   const readStream = await getFileStream(key);
-  console.log(readStream)
+//   console.log(readStream)
   response.send(readStream);
 });
 
